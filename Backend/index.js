@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "config/config.env" });
 const ConnectDB = require("./config/db.connect");
 
-/*App connect */
+/*App connect to data base */
 const port = process.env.PORT || 8090;
 
 process.on("uncaughtException", (err) => {
@@ -12,7 +12,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-app.listen(port, async () => {
+const server = app.listen(port, async () => {
   await ConnectDB();
   console.log(`Server running on http://localhost:${port}`);
 });
@@ -23,7 +23,7 @@ process.on("unhandledRejection", (err) => {
   server.close(() => {
     process.exit(1);
   });
-}); 
+});
 /* 
 //useing basic ("http") to create server; 
 const http = require("http");
