@@ -6,3 +6,8 @@ const ErrorHandler = (message, statusCode) => {
 };
 
 module.exports = ErrorHandler;
+
+/* 
+we cant use this directly for this we 
+make a file error.js in middleware folder
+*/
