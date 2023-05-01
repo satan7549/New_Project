@@ -1,7 +1,7 @@
 const productModel = require("../models/productModels");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
-const { search, filter, sort } = require("../utils/apiFeatures");
+const { search, filter, sort, paginate } = require("../utils/apiFeatures");
 
 // Create Product -- Admin
 const createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -13,8 +13,11 @@ const createProduct = catchAsyncErrors(async (req, res, next) => {
 //get All products
 const getAllProducts = catchAsyncErrors(async (req, res, next) => {
   // Get the query string parameters from the request object
-
+  let resultPerPage = 1;
+  
+  let productCount = await productModel.countDocuments();
   // Create a base query to get all products
+  // const produts = await productModel.find();
   let query = productModel.find();
   // Apply the search feature function
   query = search(query, req.query);
@@ -25,11 +28,15 @@ const getAllProducts = catchAsyncErrors(async (req, res, next) => {
   // Apply the sorting feature function according to price and rating
   query = sort(query, req.query);
 
+  // Apply the pagination feature function
+
+  query = paginate(query, req.query, resultPerPage);
+
   // Execute the query and send the response
   const products = await query;
 
-  // const produts = await productModel.find();
-  res.status(201).json({ success: true, products });
+  
+  res.status(201).json({ success: true, products, productCount });
 });
 
 //single product detail
