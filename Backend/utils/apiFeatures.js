@@ -68,7 +68,6 @@ const sort = (query, queryStr) => {
 const paginate = (query, queryStr, resultPerPage) => {
   const currentPage = Number(queryStr.page) || 1;
   const skip = resultPerPage * (currentPage - 1);
-  console.log("skip",skip);
   query = query.limit(resultPerPage).skip(skip);
   return query;
 };
