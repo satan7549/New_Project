@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 /* import all routes */
 const user = require("./routes/user.route");
 const product = require("./routes/product.route");
+
 app.use("/user", user);
 app.use("/product", product);
 
