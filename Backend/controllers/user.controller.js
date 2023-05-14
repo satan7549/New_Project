@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const sendToken = require("../utils/jswToken");
 
 // register User;
-
 const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
 
