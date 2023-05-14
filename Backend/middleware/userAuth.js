@@ -16,15 +16,17 @@ const isUserAuthenticated = catchAsyncError(async (req, res, next) => {
 });
 
 //check user role
-const checkRole = (...roles) => {
-    console.log("role", roles);
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      console.log("!role", req.user.role);
-    }
-
-    console.log("role", req.user.role);
-  };
-};
+const checkRole = catchAsyncError((req, res, next) => {
+  console.log("role",req.user.role)
+  if (req.user.role !== "admin") {
+    return next(
+      ErrorHandler(
+        `Role: ${req.user.role} is not allowed to access this resource`,
+        403
+      )
+    );
+  }
+  next();
+});
 
 module.exports = { isUserAuthenticated, checkRole };
